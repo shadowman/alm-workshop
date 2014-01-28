@@ -14,16 +14,29 @@ class git {
 	}
 }
 
+class common {
+	include git
+	file { "/etc/hosts":
+		ensure => present,
+		source => "/vagrant/puppet/files/hosts",
+		mode => 664,
+		owner => root,
+		group => root
+
+	}
+}
+
 node "ci" {
-	include git	
+	include common
 	package { "jenkins":
 		ensure => installed
 	}
 }
 
 node "dev" {
-	include git
+	include common
 }
+
 
 
 
