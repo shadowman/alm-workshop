@@ -29,4 +29,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ci.vm.hostname = "ci"
     ci.vm.network :private_network, ip: "10.10.10.3"
   end
+
+  config.vm.define "cvs" do |cvs| 
+    cvs.vm.hostname = "cvs"
+    cvs.vm.network :private_network, ip: "10.10.10.4"
+  end
 end
