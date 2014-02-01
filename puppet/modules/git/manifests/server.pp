@@ -33,7 +33,7 @@ class git::server inherits git {
 	
 	# Add host keys to the ssh server authorized_keys file for the git user
 	file { "/home/git/.ssh":
-		ensure  => directory
+		ensure  => directory,
 		owner   => "git",
 		group   => "git"
 	}
