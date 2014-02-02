@@ -20,11 +20,23 @@ Package {
 class common {
   include git
 
+  # Update hosts file so that VM can call eachother 
+  # without ip's being referenced explicitly
   file { '/etc/hosts':
     ensure => present,
     source => '/vagrant/puppet/files/hosts',
     mode   => '0644',
     owner  => root,
     group  => root
+  }
+
+  # Have the vagrant user use the host key as his id
+  file { "/home/vagrant/.ssh/id_rsa":
+    ensure  => file,
+    recurse => true,
+    owner   => "vagrant",
+    group   => "vagrant",
+    mode  => 600,
+    source  => "file:////etc/ssh/ssh_host_rsa_key"
   }
 }

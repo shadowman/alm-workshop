@@ -8,3 +8,8 @@ node 'ci' {
 node 'dev' {
   include common
 }
+
+node 'cvs' {
+  include common
+  include git::server
+}
