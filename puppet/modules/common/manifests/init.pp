@@ -39,4 +39,32 @@ class common {
     mode  => 600,
     source  => "file:////etc/ssh/ssh_host_rsa_key"
   }
+
+  # Read pubkey contents and parse its fields into an array.
+  $pubkey_contents = file('/etc/ssh/ssh_host_rsa_key.pub')
+  $pubkey_fields   = split($pubkey_contents, ' ')
+  $pubkey_target   = '/etc/ssh/ssh_known_hosts'
+
+  # Make sure the target file has the proper mode and ownership.
+  file { $pubkey_target:
+    ensure => present,
+    mode   => '0644',
+    owner  => root,
+    group  => root
+  }
+
+  # Define a common sshkey for all nodes from a pubkey file.
+  sshkey { 'common pubkey':
+    ensure       => present,
+    target       => $pubkey_target,
+    require      => File[$pubkey_target],
+    type         => $pubkey_fields[0],
+    key          => $pubkey_fields[1],
+    name         => 'precise32',
+    host_aliases => [
+      'dev', '10.10.10.2',
+      'ci',  '10.10.10.3',
+      'cvs', '10.10.10.4',
+    ]
+  }
 }
