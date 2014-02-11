@@ -14,24 +14,29 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      # Use VBoxManage to customize the VM. For example to change memory:
      vb.customize ["modifyvm", :id, "--memory", "1024"]
    end
- 
+
   config.vm.provision :puppet, :module_path => "puppet/modules" do |puppet|
      puppet.manifests_path = "puppet/manifests"
      puppet.manifest_file  = "workshop.pp"
   end
 
-  config.vm.define "dev" do |dev| 
+  config.vm.define "dev" do |dev|
     dev.vm.hostname = "dev"
     dev.vm.network :private_network, ip: "10.10.10.2"
   end
 
-  config.vm.define "ci" do |ci| 
+  config.vm.define "ci" do |ci|
     ci.vm.hostname = "ci"
     ci.vm.network :private_network, ip: "10.10.10.3"
   end
 
-  config.vm.define "cvs" do |cvs| 
+  config.vm.define "cvs" do |cvs|
     cvs.vm.hostname = "cvs"
     cvs.vm.network :private_network, ip: "10.10.10.4"
+  end
+
+  config.vm.define "pre" do |pre|
+    pre.vm.hostname = "pre"
+    pre.vm.network :private_network, ip: "10.10.10.5"
   end
 end

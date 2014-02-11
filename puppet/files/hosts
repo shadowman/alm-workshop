@@ -2,6 +2,7 @@
 10.10.10.2 dev
 10.10.10.3 ci
 10.10.10.4 cvs
+10.10.10.5 pre
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     ip6-localhost ip6-loopback
